@@ -44,6 +44,11 @@ async function goAndDoSomeRekognition() {
             console.log(data.Labels[item].Name + ": " + data.Labels[item].Confidence);
         }
         
+        data.Labels.forEach(
+            (item) => console.log(item.Name + ": " + item.Confidence));
+
+
+        
         // facial recognition and print the confidence
         let compareFacesResult = await rekognition.compareFaces(paramsForFacialRecognition).promise();
         console.log("Here is our matching confidence");
