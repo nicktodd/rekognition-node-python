@@ -32,30 +32,22 @@ let params = {
     },
     SimilarityThreshold:90,
     }
-
    
-    // let myLabels = null;
-    // rekognition.detectLabels(params, function (err, data) {
-    //     if (err) console.log(err, err.stack);
-    //     else { 
-    //         console.log(data);
-    //         myLabels = data;
-    //     }
-    // });
 
-    // rekognition.detectLabels(params).promise()
-    //         .then(data => console.log(data))
-    //         .catch(err => console.log(err));
-
-    
 async function goAndDoSomeRekognition() {
     try {
         // label detection
         let data = await rekognition.detectLabels(params).promise();
-        console.log(data);
-        // facial recognition
+        
+        // print all of the labels
+        for (item in data.Labels) {
+            console.log(data.Labels[item].Name + ": " + data.Labels[item].Confidence);
+        }
+        
+        // facial recognition and print the confidence
         let compareFacesResult = await rekognition.compareFaces(paramsForFacialRecognition).promise();
-        console.log(compareFacesResult);
+        console.log("Here is our matching confidence");
+        console.log(compareFacesResult.FaceMatches[0].Similarity);
     }
     catch(ex) {
         console.log("Rekognition didn't work" + ex);
